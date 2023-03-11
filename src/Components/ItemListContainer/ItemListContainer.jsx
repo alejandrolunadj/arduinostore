@@ -1,7 +1,35 @@
-const ItemListContainer = ({ greeting }) => {
+import { useState, useEffect } from "react";
+import { products } from "../../productsMock";
+import ItemList from "../ItemList/ItemList";
+import {useParams} from "react-router-dom"
+
+
+const ItemListContainer = () => {
+  const { id } = useParams();
+  
+  const [items, setItems] = useState([]);
+
+  const productosFiltrados = products.filter ( ( elemento) => elemento.category === id)
+
+  useEffect(() => {
+    const productList = new Promise((resolve, reject) => {
+      resolve(id ? productosFiltrados :products);
+    });
+
+    productList
+      .then((res) => {
+        setItems(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
+
   return (
     <div>
-        <h1><center>{greeting}</center></h1>
+      
+      <ItemList items={items}  />
+      
     </div>
   );
 };
