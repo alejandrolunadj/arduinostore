@@ -23,6 +23,7 @@ const ItemListContainer = () => {
       .catch((error) => {
         console.log(error);
       });
+	  return <div> </div>
   }, [id]);
 
   return (
