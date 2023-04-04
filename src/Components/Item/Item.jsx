@@ -34,10 +34,10 @@ const Item = ({ element }) => {
         <Typography variant="body">${element.price}.-</Typography>
       </CardContent>
       <CardActions>
-        <Link to ={`/item/${element.id}`}>
-        <Button size="small" variant="contained" color="primary">
-          Ver detalle
-        </Button>
+        <Link to={`/itemDetail/${element.id}`}>
+          <Button size="small" variant="contained" color="primary">
+            Ver detalle
+          </Button>
         </Link>
       </CardActions>
     </Card>

@@ -1,12 +1,41 @@
-
 import styles from "./Navbar.module.css";
 
-
 import CartWidget from "../CartWidget/CartWidget";
-import {Link} from "react-router-dom";
+
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 const Navbar = ({ children }) => {
-  let numero = 0;
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    const itemsCollection = collection(db, "categories");
+    getDocs(itemsCollection).then((res) => {
+      let arrayCategories = res.docs.map((category) => {
+        return {
+          ...category.data(),
+          id: category.id,
+        };
+      });
+      arrayCategories.sort((a, b) => {
+        const nameA = a.title; 
+        const nameB = b.title; 
+        if (nameA < nameB) {
+          return 1;
+        }
+        if (nameA > nameB) {
+          return -1;
+        }
+        return 0;
+      });
+      
+      setCategoryList(arrayCategories);
+    });
+  }, []);
+
   return (
     <div>
       <div className={styles.containerNavbar}>
@@ -19,11 +48,19 @@ const Navbar = ({ children }) => {
 	</Link>
 
         <ul className={styles.containerList}>
-          <Link to="/"  className={styles.navbarItem}>Todos</Link>
-          <Link to="/category/basico"  className={styles.navbarItem}>Báscios</Link>
-          <Link to="/category/avanzado"  className={styles.navbarItem}>Avanzados</Link>
+          {categoryList?.map((category) => {
+            return (
+              <Link
+                key={category.id}
+                to={category.path}
+                className={styles.navbarItem}
+              >
+                {category.title}
+              </Link>
+            );
+          })}
         </ul>
-        <CartWidget numero={numero} />
+        <CartWidget />
       </div>
       {children}
     </div>

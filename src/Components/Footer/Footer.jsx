@@ -1,10 +1,11 @@
 
 
-const Footer = ( ) => {
+const Footer = ( {children} ) => {
 
   return (
     <div>
-      <h2 ><center> Desarrollado por Alejandro Luna </center> </h2>
+      {children}
+      <h1>Desarrollado por Alejandro Luna</h1>
     </div>
   )
 }
