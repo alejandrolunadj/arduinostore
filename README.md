@@ -6,5 +6,5 @@ https://github.com/alejandrolunadj/arduinostore
 
 ### `Proyecto funcionando en la nube:`
 
-https://arduinostore-kmb8d4eut-alejandrolunadj.vercel.app/
+https://arduinostore.vercel.app/
 
